@@ -24,7 +24,7 @@ type args struct {
 }
 
 func main() {
-	sa := new(selpg_Args)
+	sa := new(args)
 
 	process(*sa)
 
@@ -32,7 +32,7 @@ func main() {
 }
 
 //根据参数执行指令，步骤：判断输入方式，绑定输入流 → 绑定管道（如果有管道） → l/f读取
-func run(sa selpg_Args) {
+func run(sa args) {
 	//初始化
 	fin := os.Stdin  //输入
 	fout := os.Stdout  //输出
@@ -114,12 +114,12 @@ func run(sa selpg_Args) {
 
 }
 
-func process(sa selpg_Args) {
+func process(sa args) {
 	//参数绑定：将所有的参数使用pflag绑定到变量上。  //之后改为单独的函数
 	flag.IntVar(&sa.start, "s", 0, "the start page")  //起始位置，默认为0
 	flag.IntVar(&sa.end, "e", 0, "the end page")  //终止位置，默认也是0
 	flag.IntVar(&sa.len, "l", 72, "the length of the page")  //每页行数，默认为72
-	flag.IntVar(&sa.dest, "d", "", "the destination of the out")  //输出位置，默认为空字符？？
+	flag.StringVar(&sa.dest, "d", "", "the destination of the out")  //输出位置，默认为空字符？？
 
 	//查找是否为f
 	forl := flag.Bool("f", false, "")  
